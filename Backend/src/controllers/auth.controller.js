@@ -7,7 +7,7 @@ export const LoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
     // console.log(email , "email" , password , "password");
-    
+
     //if email and password is empty
     if (!email || !password)
       return res
@@ -68,27 +68,26 @@ export const SignupController = async (req, res) => {
         .status(401)
         .json({ success: false, message: "username should not be empty" });
     }
-    if (password.length < 6){
+    if (password.length < 6) {
       // console.log(password.length , "password lenght error" );/
-      
+
       return res.status(401).json({
         success: false,
         message: "pasword should be more 6 charcters",
-      
       });
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
-      console.log(email , "email error");
-      
+      console.log(email, "email error");
+
       return res.status(400).json({ message: "Invalid email format" });
     }
 
     const user = await UserModel.findOne({ email: email });
-    if (user){
-      console.log(user , "user already exists");
-      
+    if (user) {
+      console.log(user, "user already exists");
+
       return res
         .status(401)
         .json({ success: false, message: "This email is already an user" });
